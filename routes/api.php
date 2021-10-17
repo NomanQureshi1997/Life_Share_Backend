@@ -33,6 +33,8 @@ Route::post('registerngo',  function() {
     $ngo->name = 'Sundas';
     $ngo->email = 'sundas@gmail.com';
     $ngo->phone = '03069056234';
+    $ngo->password ='myfriend1997';
+    $ngo->location ='samnabad';
     $ngo->registration_id = '1564';
     $ngo->type = 'nog';
     $ngo->save();
