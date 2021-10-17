@@ -15,7 +15,7 @@ class CreateDonorsTable extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('blood_group');
             $table->string('phone');
