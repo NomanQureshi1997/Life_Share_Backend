@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DonorController;
+use App\Models\Ngo;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,18 @@ use Illuminate\Support\Facades\Route;
 // Route::delete('delete/{id}/', [DonorController::class,'destroy']);
 
 // Route::delete('delete/{id}', [DonorController::class,'destroy']);
-// Route::post('delete',[DonorController::class,'destroy']);
+Route::post('registerngo',  function() {
+    $ngo = new Ngo();
+    $ngo->name = 'Sundas';
+    $ngo->email = 'sundas@gmail.com';
+    $ngo->location = 'SamnaBad';
+    $ngo->address_latitude = 'SamnaBad';
+    $ngo->phone = '03069056234';
+    $ngo->registration_id = '1564';
+    $ngo->type = 'nog';
+    $ngo->save();
+    return response()->json(['message'=>"Donor Successfully",'action'=>'redirect','do'=>url('donors')],200);
+});
 Route::get('requests', function () {
     $requests = App\Models\Request::all();
     $count =App\Models\Donor::count();
