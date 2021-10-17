@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $request = new Request();
             $request->name = "name-".rand(10,9999).'-'.date('y-m-d');
-            $request->message = '-request'.rand(10,9999).'-'.date('y-m-d');
+            $request->message = 'There is an emergency at Kalma Chowk a person named Ali is serious injured';
             $request->save();
         })->everyMinute();
     }
