@@ -15,7 +15,7 @@ class CreateDonorsTable extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('blood_group');
             $table->string('phone');
@@ -23,7 +23,7 @@ class CreateDonorsTable extends Migration
             $table->date('idle_date')->nullable();
             $table->date('active_date')->nullable();
             $table->boolean('is_active')->nullable();
-            $table->softDeletes('deleted_at');            
+            $table->softDeletes('deleted_at');
             $table->timestamps();
         });
     }
