@@ -53,7 +53,7 @@ class DonorController extends Controller
             $donor->blood_group = $request->blood_group;
             $donor->phone = $request->phone;
             $donor->age = $request->age;
-            // $donor->ngo_id = 1;
+            $donor->ngo_id = 1;
             $donor->is_active = 1;
             $donor->save();
 
