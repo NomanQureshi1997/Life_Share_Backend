@@ -32,7 +32,6 @@ Route::post('registerngo',  function() {
     $ngo = new Ngo();
     $ngo->name = 'Sundas';
     $ngo->email = 'sundas@gmail.com';
-    $ngo->address_latitude = 'SamnaBad';
     $ngo->phone = '03069056234';
     $ngo->registration_id = '1564';
     $ngo->type = 'nog';
