@@ -17,6 +17,13 @@ class DonorController extends Controller
     {
         // DB::beginTransaction();
         try{
+            $request->validate([
+                'age' => 'required|min:20',
+                // 'name' => 'required',
+                // 'phone' => 'required',
+                // 'blood_group' => 'required',
+
+            ]);
             $donor = new Donor();
             $donor->name = $request->name;
             $donor->blood_group = $request->blood_group;
@@ -66,6 +73,15 @@ class DonorController extends Controller
             // return "true";
         // return $request;
         Donor::find($id)->delete($id);
+        return "success";
+        } catch(Exception $e)
+		{
+			return response()->json(['message' => $e->getMessage()], 403);
+		}
+    }
+    public function test(Request $request)
+    {
+        try{
         return "success";
         } catch(Exception $e)
 		{
