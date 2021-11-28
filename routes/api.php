@@ -4,8 +4,10 @@ use App\Models\Ngo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\BloodRequestController;
+use App\Http\Controllers\EmergencyRequestController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DonorController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,14 +22,24 @@ use App\Http\Controllers\AuthenticationController;
 Route::post('/create-account', [AuthenticationController::class, 'createAccount']);
 //login user
 Route::post('/signin', [AuthenticationController::class, 'signin']);
+
+Route::get('/profile', function(Request $request) {
+    return 'test';
+});
+
+Route::group(['middleware' => ['mobile-app']], function () {
+    Route::post('/blood-request', [BloodRequestController::class, 'bloodRequests']);
+    Route::post('/emergency-request', [EmergencyRequestController::class, 'emergencyRequests']);
+});
+
 //using middleware
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
+    
+    
 
     Route::post('/sign-out', [AuthenticationController::class, 'logout']);
+
+
 
     Route::post('registerngo',  function() {
         $ngo = new Ngo();
@@ -42,8 +54,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return response()->json(['message'=>"Donor Successfully",'action'=>'redirect','do'=>url('donors')],200);
     });
     
-    
     Route::resource('donors',DonorController::class);
+    
 });
 
 
