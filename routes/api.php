@@ -37,8 +37,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     
     
 
-    Route::post('/sign-out', [AuthenticationController::class, 'logout']);
+    Route::post('/sign-out', [AuthenticationController::class, 'signout']);
 
+    Route::get('/get-emergency-request', [EmergencyRequestController::class, 'getEmergencyRequests']);
 
 
     Route::post('registerngo',  function() {

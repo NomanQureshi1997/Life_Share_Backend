@@ -15,13 +15,12 @@ class DonorController extends Controller
     }
     public function store(Request $request)
     {
-        // DB::beginTransaction();
         try{
             $request->validate([
-                'age' => 'required|min:20',
-                // 'name' => 'required',
-                // 'phone' => 'required',
-                // 'blood_group' => 'required',
+                'age' => 'required|integer|between:18,60',
+                'name' => 'required',
+                'phone' => 'required',
+                'blood_group' => 'required',
 
             ]);
             $donor = new Donor();
@@ -37,11 +36,8 @@ class DonorController extends Controller
         }
         catch(Exception $e)
 		{
-			// DB::rollBack();
-
 			return response()->json(['message' => $e->getMessage()], 422);
 		}
-		// DB::commit();
 
     }
     public function update(Request $request)

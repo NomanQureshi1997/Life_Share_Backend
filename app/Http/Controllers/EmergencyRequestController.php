@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\EmergencyRequest;
-
+use DB;
 class EmergencyRequestController extends Controller
 {
     public function emergencyRequests(Request $request)
@@ -25,6 +25,14 @@ class EmergencyRequestController extends Controller
         } catch (Exception $e) {
 
                 return response('error occured', 422);
+        }
+    }
+    public function getEmergencyRequests(){
+        try{
+            $request = EmergencyRequest::all();
+            return response( $request,200);
+        } catch (Exception $e) {
+            return response('error occured', 422);
         }
     }
 }

@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
 
         return response([
             'token' => auth()->user()->createToken('API Token')->plainTextToken
-        ]);
+        ],200);
     }
 
     // this method signs out users by removing tokens
