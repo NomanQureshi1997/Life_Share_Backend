@@ -10,17 +10,10 @@ class BloodRequestController extends Controller
     public function bloodRequests(Request $request)
     {
         try {
+            $requested = collect($request);
+            $test = BloodRequest::create($requested->toArray());
 
-            $user = BloodRequest::create([
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'phone_no' => $request['phone_no'],
-                'message' => $request['message'],
-                'required_blood' => $request['required_blood'],
-                'guard_name' => $request['guard_name']
-            ]);
-
-            return response('success', 200);
+            return response($test, 200);
 
 
         } catch (Exception $e) {
@@ -29,11 +22,14 @@ class BloodRequestController extends Controller
 
         }
     }
+    public function getBloodRequestRequests(){
+        
+        try{
+            return response()->json( BloodRequest::all(), 200);
+
+        } catch (Exception $e) {
+
+            return response('error occured', 422);
+        }
+    }
 }
-// 'name' => $request['name'],
-//             'email' => $request['email'],
-//             'phone_no' => $request['phone_no'],
-//             'message' => $request['message'],
-//             'required_blood' => $request['required_blood'],
-//             'location' => $request['location'], 
-//             'guard_name' => $request['guard_name']

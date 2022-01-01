@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
 {
@@ -39,7 +40,8 @@ class AuthenticationController extends Controller
         }
 
         return response([
-            'token' => auth()->user()->createToken('API Token')->plainTextToken
+            'token' => auth()->user()->createToken('API Token')->plainTextToken,
+            'userInfo' => auth()->user()
         ],200);
     }
 
@@ -51,5 +53,48 @@ class AuthenticationController extends Controller
         return [
             'message' => 'Tokens Revoked'
         ];
+    }
+
+    public function updateProfile(Request $request)
+    {
+        try{
+            $attr = $request->validate([
+                'name' => 'required|string|regex:/^[a-zA-Z0-9\s]+$/',
+            ]);
+            User::where('id', auth()->user()->id)
+            ->update(['name' => $request->name]);
+    
+            return response([
+                'update' => 'updated successfuly'
+            ],200);
+        }catch (Exception $e) {
+
+            return response('error occured', 422);
+        }
+    }
+    public function passwordReset(Request $request)
+    {
+        try{
+
+            $attr = $request->validate([
+                'currentPassword' => 'required|string|min:6',
+                'password' => 'required|min:6|confirmed',
+                'password_confirmation' => 'required|min:6' 
+            ]);
+            
+            if ( !(hash::check($attr['currentPassword'], auth()->user()->password))) {
+                return response('Password in invalid', 401);
+            }
+
+            User::where('id', auth()->user()->id)
+            ->update(['password' => bcrypt($attr['password'])]);
+
+            return response([
+                'update' => 'updated successfuly'
+            ],200);
+        }catch (Exception $e) {
+
+            return response('error occured', 422);
+        }
     }
 }

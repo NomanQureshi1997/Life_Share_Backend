@@ -3,36 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EmergencyRequest;
-use App\Models\Donor;
-use DB;
-class EmergencyRequestController extends Controller
+use App\Models\BloocBank;
+
+class BloodBankController extends Controller
 {
-    public function emergencyRequests(Request $request)
+    public function bloodRequests(Request $request)
     {
         try {
-            $user = EmergencyRequest::create([
+
+            $user = BloodBank::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'phone_no' => $request['phone_no'],
                 'message' => $request['message'],
-                'location' => $request['location'],
-                'blood_group' => $request['blood_group'],
+                'required_blood' => $request['required_blood'],
                 'guard_name' => $request['guard_name']
             ]);
 
             return response('success', 200);
 
+
         } catch (Exception $e) {
 
-                return response('error occured', 422);
+            return response($e, 422);
+
         }
     }
-    public function getEmergencyRequests(){
+    public function getBloodRequestRequests(){
+        
         try{
 
-            $requestData = EmergencyRequest::all();
-            $donorsCount =  Donor::count();
+            $requestData = BloodRequest::all();
             $dataForm = [];
             foreach($requestData as $data){
                 array_push($dataForm , [
@@ -41,11 +42,11 @@ class EmergencyRequestController extends Controller
                     'headline' => $data->email,
                     'subtitle' => $data->message,
                     'title'    => $data->name,
-                    'location' => $data->location,
+                    'requiredBlood' => $data->required_blood,
                     'contact'  => $data->phone_no
                 ]);
             }
-            return response(['emergencyRequest' => $dataForm, 'donorCount' => $donorsCount], 200);
+            return response( $dataForm, 200);
 
         } catch (Exception $e) {
 
@@ -53,4 +54,3 @@ class EmergencyRequestController extends Controller
         }
     }
 }
-//9jdMFRnOPVaogJ6jFd44zEDG3XmwNo4mm37GP6XC

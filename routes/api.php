@@ -40,8 +40,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/sign-out', [AuthenticationController::class, 'signout']);
 
     Route::get('/get-emergency-request', [EmergencyRequestController::class, 'getEmergencyRequests']);
-
-
+    Route::get('/get-blood-request', [BloodRequestController::class, 'getBloodRequestRequests']);
+    Route::post('/update-user-profile', [AuthenticationController::class, 'updateProfile']);
+    Route::post('/password-update', [AuthenticationController::class, 'passwordReset']);
+    
+    Route::post('/register-blood-bag', [EmergencyRequestController::class, 'getEmergencyRequests']);
+    Route::get('/get-blood-bag', [EmergencyRequestController::class, 'getEmergencyRequests']);
+    
     Route::post('registerngo',  function() {
         $ngo = new Ngo();
         $ngo->name = 'Sundas';
