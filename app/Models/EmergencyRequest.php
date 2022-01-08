@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmergencyRequest extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'phone_no','message','blood_group','location', 'guard_name'];
+    protected $fillable = ['patient', 'group', 'city','state','hospital','contact_person','contact_phone','contact_email','date'];
+
 
 }

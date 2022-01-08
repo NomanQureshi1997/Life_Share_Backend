@@ -13,7 +13,7 @@ class BloodRequestController extends Controller
             $requested = collect($request);
             $test = BloodRequest::create($requested->toArray());
 
-            return response($test, 200);
+            return response()->json($test, 200);
 
 
         } catch (Exception $e) {

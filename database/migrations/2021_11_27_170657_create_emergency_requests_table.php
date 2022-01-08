@@ -15,13 +15,15 @@ class CreateEmergencyRequestsTable extends Migration
     {
         Schema::create('emergency_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone_no');
-            $table->string('message');
-            $table->string('blood_group');
-            $table->string('location', 500);
-            $table->string('guard_name');
+            $table->string('patient')->nullable();
+            $table->string('group')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('hospital')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->string('contact_phone')->nullable();
+            $table->string('contact_email')->nullable();
+            $table->string('date');
             $table->timestamps();
         });
     }

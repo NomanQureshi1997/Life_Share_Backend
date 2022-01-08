@@ -18,14 +18,12 @@ class CreateBloodRequestsTable extends Migration
             $table->string('patient')->nullable();
             $table->string('group')->nullable();
             $table->string('city')->nullable();
-            $table->string('district')->nullable();
             $table->string('state')->nullable();
             $table->string('hospital')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('contact_phone')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('date');
-            $table->timestamp('when')->nullable();
             $table->timestamps();
         });
     }
