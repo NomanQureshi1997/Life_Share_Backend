@@ -21,7 +21,6 @@ class DonorController extends Controller
                 'name' => 'required',
                 'phone' => 'required',
                 'blood_group' => 'required',
-
             ]);
             $donor = new Donor();
             $donor->name = $request->name;
@@ -43,19 +42,14 @@ class DonorController extends Controller
     public function update(Request $request)
     {
         try{
-            // return dd($request);
+            $request->validate([
+                'age' => 'required|integer|between:18,60',
+                'name' => 'required',
+                'phone' => 'required',
+                'blood_group' => 'required',
+            ]);
             Donor::where('id',$request->id)->update(  $request->all() );
-            // $donor = Donor::find($request->id);
-
-            // $donor->name = $request->name;
-            // $donor->blood_group = $request->blood_group;
-            // $donor->phone = $request->phone;
-            // $donor->age = $request->age;
-            // $donor->is_active = $donor->is_active?$donor->is_active:1;
-            // $donor->active_date = Null;
-            // $donor->save();
-        return response()->json(['message'=>"Donor Updated Successfully",'action'=>'redirect','do'=>url('/donors')],200);
-
+            return response()->json(['message'=>"Donor Updated Successfully",'action'=>'redirect','do'=>url('/donors')],200);
         }
         catch(Exception $e)
 		{

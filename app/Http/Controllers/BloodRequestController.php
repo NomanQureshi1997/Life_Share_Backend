@@ -11,9 +11,9 @@ class BloodRequestController extends Controller
     {
         try {
             $requested = collect($request);
-            $test = BloodRequest::create($requested->toArray());
+            $responce = BloodRequest::create($requested->toArray());
 
-            return response()->json($test, 200);
+            return response()->json($responce, 200);
 
 
         } catch (Exception $e) {
@@ -22,10 +22,10 @@ class BloodRequestController extends Controller
 
         }
     }
-    public function getBloodRequestRequests(){
+    public function getBloodRequestRequests(Request $request){
         
         try{
-            return response()->json( BloodRequest::all(), 200);
+            return response()->json( BloodRequest::where('date', $request['date'])->get(), 200);
 
         } catch (Exception $e) {
 

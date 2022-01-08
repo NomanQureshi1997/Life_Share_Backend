@@ -21,11 +21,10 @@ class EmergencyRequestController extends Controller
         }
     }
     
-    public function getEmergencyRequests(){
+    public function getEmergencyRequests(Request $request){
         try{
-
             return response()->json([
-                'emergencyRequest' =>  EmergencyRequest::all(),
+                'emergencyRequest' =>  EmergencyRequest::where('date', $request['date'])->get(),
                 'donorCount' => Donor::count()
             ], 200);
 

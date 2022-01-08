@@ -8,6 +8,7 @@ use App\Http\Controllers\BloodRequestController;
 use App\Http\Controllers\EmergencyRequestController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DonorController;
+use App\Http\Controllers\BloodBankController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,8 +45,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/update-user-profile', [AuthenticationController::class, 'updateProfile']);
     Route::post('/password-update', [AuthenticationController::class, 'passwordReset']);
     
-    Route::post('/register-blood-bag', [EmergencyRequestController::class, 'getEmergencyRequests']);
-    Route::get('/get-blood-bag', [EmergencyRequestController::class, 'getEmergencyRequests']);
+    Route::post('/register-blood-bag', [BloodBankController::class, 'registerBloodBag']);
+    Route::get('/get-blood-bag', [BloodBankController::class, 'getBloodBags']);
+    Route::get('/delete-blood-bag', [BloodBankController::class, 'destroy']);
+    Route::post('/update-blood-bag', [BloodBankController::class, 'update']);
     
     Route::post('registerngo',  function() {
         $ngo = new Ngo();
