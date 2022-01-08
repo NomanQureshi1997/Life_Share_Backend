@@ -16,7 +16,7 @@ class CreateBloodRequestsTable extends Migration
         Schema::create('blood_requests', function (Blueprint $table) {
             $table->id();
             $table->string('patient')->nullable();
-            $table->string('group')->nullable();
+            $table->string('blood')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('hospital')->nullable();

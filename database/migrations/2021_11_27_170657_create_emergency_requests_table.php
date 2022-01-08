@@ -16,7 +16,7 @@ class CreateEmergencyRequestsTable extends Migration
         Schema::create('emergency_requests', function (Blueprint $table) {
             $table->id();
             $table->string('patient')->nullable();
-            $table->string('group')->nullable();
+            $table->string('blood')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('hospital')->nullable();

@@ -9,6 +9,4 @@ class EmergencyRequest extends Model
 {
     use HasFactory;
     protected $fillable = ['patient', 'group', 'city','state','hospital','contact_person','contact_phone','contact_email','date'];
-
-
 }
