@@ -38,6 +38,9 @@ class DonorController extends Controller
     public function update(Request $request)
     {
         try{
+            $request->validate([
+                'email' => 'required|unique:donors,email,'.$request->id,
+            ]);
             $test = Donor::where('id',$request->id)->update( collect( $request->all())->toArray() );
             return response()->json(['message'=>"Donor Updated Successfully"],200);
         }

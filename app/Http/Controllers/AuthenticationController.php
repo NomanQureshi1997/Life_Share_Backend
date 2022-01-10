@@ -27,7 +27,7 @@ class AuthenticationController extends Controller
             'token' => $user->createToken('tokens')->plainTextToken
         ]);
     }
-    //use this method to signin users
+
     public function signin(Request $request)
     {
         $attr = $request->validate([
@@ -45,7 +45,6 @@ class AuthenticationController extends Controller
         ],200);
     }
 
-    // this method signs out users by removing tokens
     public function signout()
     {
         auth()->user()->tokens()->delete();

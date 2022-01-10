@@ -72,7 +72,7 @@ class BloodBankController extends Controller
                 'donor_name' => 'required',
                 'donor_weight' => 'required',
                 'blood_group' => 'required',
-                'bag_id' => 'required',
+                'bag_id' => 'required|unique:blood_banks,bag_id,'.$request->id,
                 'donor_weight' => 'required|integer|between:50,120',
             ]);
             BloodBank::where('id',$request->id)->update(  $request->all() );

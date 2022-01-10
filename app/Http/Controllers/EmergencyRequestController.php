@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\EmergencyRequest;
 use App\Models\Donor;
+use App\Models\BloodBank;
 use DB;
 class EmergencyRequestController extends Controller
 {
@@ -25,7 +26,8 @@ class EmergencyRequestController extends Controller
         try{
             return response()->json([
                 'emergencyRequest' =>  EmergencyRequest::where('date', $request['date'])->get(),
-                'donorCount' => Donor::count()
+                'donorCount' => Donor::count(),
+                'bloodBags' => BloodBank::count(),
             ], 200);
 
         } catch (Exception $e) {
