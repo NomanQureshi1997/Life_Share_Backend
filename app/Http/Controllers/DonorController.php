@@ -4,52 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donor;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class DonorController extends Controller
 {
     public function index()
     {
-        $donors = Donor::all();
+        $donors = Donor::where('ngo_id', auth()->user()->id)->get();
         return $donors;
     }
     public function store(Request $request)
     {
-        try{
             $request->validate([
-                'age' => 'required|integer|between:18,60',
-                'name' => 'required',
-                'phone' => 'required',
-                'blood_group' => 'required',
+                'email' => 'required|unique:donors',
             ]);
-            $donor = new Donor();
-            $donor->name = $request->name;
-            $donor->blood_group = $request->blood_group;
-            $donor->phone = $request->phone;
-            $donor->age = $request->age;
-            $donor->ngo_id = 1;
-            $donor->is_active = 1;
-            $donor->save();
-        return response()->json(['message'=>"Donor Successfully",'action'=>'redirect','do'=>url('donors')],200);
+            Donor::create([ 
+                'name' => $request['name'],
+                'age' =>  $request['age'],
+                'weight' => $request['weight'],
+                'blood' =>  $request['blood'],
+                'gender' => $request['gender'],
+                'address' => $request['address'],
+                'city' =>  $request['city'],
+                'phone' => $request['phone'],
+                'email' => $request['email'],
+                'last_donated' => $request['last_donated'],
+                'ngo_id' => auth()->user()->id
+            ]);
 
-        }
-        catch(Exception $e)
-		{
-			return response()->json(['message' => $e->getMessage()], 422);
-		}
-
+            return response()->json(['message'=>"Donor Successfully"],200);
     }
     public function update(Request $request)
     {
         try{
-            $request->validate([
-                'age' => 'required|integer|between:18,60',
-                'name' => 'required',
-                'phone' => 'required',
-                'blood_group' => 'required',
-            ]);
-            Donor::where('id',$request->id)->update(  $request->all() );
-            return response()->json(['message'=>"Donor Updated Successfully",'action'=>'redirect','do'=>url('/donors')],200);
+            $test = Donor::where('id',$request->id)->update( collect( $request->all())->toArray() );
+            return response()->json(['message'=>"Donor Updated Successfully"],200);
         }
         catch(Exception $e)
 		{
@@ -60,10 +50,8 @@ class DonorController extends Controller
     public function destroy(Request $request, $id)
     {
         try{
-            // return "true";
-        // return $request;
-        Donor::find($id)->delete($id);
-        return "success";
+            Donor::find($id)->delete($id);
+            return response()->json(['message'=>"Donor Deleted Successfully"],200);
         } catch(Exception $e)
 		{
 			return response()->json(['message' => $e->getMessage()], 403);

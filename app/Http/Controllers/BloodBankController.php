@@ -28,7 +28,8 @@ class BloodBankController extends Controller
                 'blood_group' => $request['blood_group'],
                 'is_accpeted' => $request['is_accpeted'],
                 'bag_id' => $request['bag_id'],
-                'date' => date('Y-m-d')
+                'date' => date('Y-m-d'),
+                'ngo_id' => auth()->user()->id
             ]);
 
             return response('success', 200);
@@ -44,7 +45,7 @@ class BloodBankController extends Controller
     public function getBloodBags(){
         
         try{
-            return response(BloodBank::all(), 200);
+            return response(BloodBank::where('ngo_id', auth()->user()->id)->get(), 200);
 
         } catch (Exception $e) {
 
@@ -71,9 +72,8 @@ class BloodBankController extends Controller
                 'donor_name' => 'required',
                 'donor_weight' => 'required',
                 'blood_group' => 'required',
-                'bag_id' => 'required|unique:blood_banks',
+                'bag_id' => 'required',
                 'donor_weight' => 'required|integer|between:50,120',
-
             ]);
             BloodBank::where('id',$request->id)->update(  $request->all() );
             return response()->json(['message'=>"Bag Updated Successfully"],200);

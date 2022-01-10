@@ -17,13 +17,15 @@ class CreateDonorsTable extends Migration
             $table->id();
             $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('blood_group');
+            $table->integer('age');
+            $table->integer('weight');
+            $table->string('blood');
+            $table->string('gender');
+            $table->string('address');
+            $table->string('city');
             $table->string('phone');
-            $table->float('age');
-            $table->date('idle_date')->nullable();
-            $table->date('active_date')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->softDeletes('deleted_at');
+            $table->string('email')->unique();
+            $table->timestamp('last_donated')->nullable();
             $table->timestamps();
         });
     }

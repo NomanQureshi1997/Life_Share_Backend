@@ -11,8 +11,5 @@ class Donor extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['blood_group', 'phone', 'age','idle_date','active_date','is_active'];
-    public function ngos(){
-        $this->belongsTo('App\Models\Ngo');
-    }
+    protected $fillable = ['name', 'phone', 'age','weight','blood','gender','city','address', 'email', 'ngo_id','last_donated'];
 }

@@ -15,11 +15,13 @@ class CreateBloodBanksTable extends Migration
     {
         Schema::create('blood_banks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('ngo_id')->constrained()->onDelete('cascade');
             $table->string('donor_name');
             $table->integer('donor_age');
             $table->integer('donor_weight');
             $table->string('phone_no');
             $table->string('blood_group');
+            $table->string('bag_id');
             $table->boolean('is_accpeted');
             $table->string('date');
             $table->timestamps();

@@ -19,12 +19,11 @@ class CreateNgosTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('location');
-            $table->double('address_latitude')->nullable();
-            $table->double('address_longitude')->nullable();
             $table->string('phone');
             $table->string('registration_id');
             $table->softDeletes('deleted_at');
             $table->string('type');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
