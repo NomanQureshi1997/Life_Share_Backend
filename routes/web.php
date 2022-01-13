@@ -13,7 +13,14 @@ use App\Http\Controllers\DonorController;
 |
 */
 
-Route::get('/test', [DonorController::class, 'test']);
+Route::get('/', function(){
+    return view('dashboard');
+});
+Route::get('test', function () {
+    // event(new App\Events\GetNotified());
+    broadcast(new App\Events\GetNotified('test'));
+    return "Event has been sent!";
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

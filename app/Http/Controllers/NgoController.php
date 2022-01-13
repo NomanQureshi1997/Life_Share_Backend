@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Ngo;
+use App\Models\User;
 
 class NgoController extends Controller
 {
@@ -34,7 +36,37 @@ class NgoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|string|email|unique:ngos,email',
+            'name'  => 'required',
+            'contact' => 'required',
+            'location' => 'required',
+            'registration_id' => 'required',
+            'type' => 'required',
+            'password' => 'required|string|min:6'
+        ]);
+        
+        $ngo = Ngo::create([
+            'name'  => $request->name,
+            'email' => $request->email,
+            'contact' => $request->contact,
+            'location' => $request->location,
+            'registration_id' => $request->registration_id,
+            'type' => $request->type
+
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+            'email' => $request->email,
+            'ngo_id' =>  $ngo->id
+        ]);
+
+        return response([
+            'token' => $user->createToken('tokens')->plainTextToken,
+            'message'=>"Ngo Register Successfully"
+        ], 200);
     }
 
     /**

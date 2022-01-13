@@ -11,8 +11,7 @@ class Ngo extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name','email', 'location', 'address_latitude',
-    'address_longitude','phone','registration_id','type'];
+    protected $fillable = ['name','email', 'location','contact','registration_id','type'];
     public $timestamps = true;
 
     public function donors(){

@@ -7,6 +7,8 @@ use App\Models\EmergencyRequest;
 use App\Models\Donor;
 use App\Models\BloodBank;
 use DB;
+use App\Events\GetNotified;
+
 class EmergencyRequestController extends Controller
 {
     public function emergencyRequests(Request $request)
@@ -14,6 +16,7 @@ class EmergencyRequestController extends Controller
         try {
             $requested = collect($request);
             $test = EmergencyRequest::create($requested->toArray());
+            broadcast(new GetNotified('Emergency Request Arrived'));
             return response()->json($test, 200);
 
         } catch (Exception $e) {
@@ -26,8 +29,8 @@ class EmergencyRequestController extends Controller
         try{
             return response()->json([
                 'emergencyRequest' =>  EmergencyRequest::where('date', $request['date'])->get(),
-                'donorCount' => Donor::count(),
-                'bloodBags' => BloodBank::count(),
+                'donorCount' => Donor::where('ngo_id', auth()->user()->id)->count(),
+                'bloodBags' => BloodBank::where('ngo_id', auth()->user()->id)->count(),
             ], 200);
 
         } catch (Exception $e) {
@@ -36,4 +39,3 @@ class EmergencyRequestController extends Controller
         }
     }
 }
-//9jdMFRnOPVaogJ6jFd44zEDG3XmwNo4mm37GP6XC

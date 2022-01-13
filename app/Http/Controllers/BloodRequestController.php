@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BloodRequest;
+use App\Events\GetNotified;
 
 class BloodRequestController extends Controller
 {
@@ -12,7 +13,7 @@ class BloodRequestController extends Controller
         try {
             $requested = collect($request);
             $responce = BloodRequest::create($requested->toArray());
-
+            broadcast(new GetNotified('Blood Request Arrived'));
             return response()->json($responce, 200);
 
 
