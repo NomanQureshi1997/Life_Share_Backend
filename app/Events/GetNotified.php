@@ -26,7 +26,7 @@ class GetNotified implements ShouldBroadcast
     public function __construct($username)
     {
         $this->username = $username;
-        $this->message  = "{$username} liked your status";
+        $this->message  = "{$username}";
     }
 
     /**
